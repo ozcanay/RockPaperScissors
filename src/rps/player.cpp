@@ -1,4 +1,4 @@
-#include "player.h"
+#include "rps/player.h"
 #include "constants.h"
 
 #include <iostream>
@@ -16,6 +16,11 @@ Weapon Player::getWeapon() const
 std::string Player::getDescription() const
 {
     return description_;
+}
+
+void Player::setWeapon(Weapon weapon)
+{
+    weapon_ = weapon;
 }
 
 void Player::win()

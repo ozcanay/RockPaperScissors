@@ -1,6 +1,11 @@
-cmake_minimum_required(VERSION 3.21)
-project(rps)
+cmake_minimum_required(VERSION 3.16)
+project(rps LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_NAME} main.cpp rps.cpp rps.h player.cpp player.h Human.cpp Human.h Computer.cpp Computer.h utility.cpp utility.h constants.h)
+enable_testing()
+
+add_subdirectory(src)
+add_subdirectory(tests)

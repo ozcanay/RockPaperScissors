@@ -1,14 +1,14 @@
 #include <iostream>
 #include <string>
-#include <memory>
 
-#include "utility.h"
+#include "constants.h"
 
-#include "rps.h"
-#include "Human.h"
-#include "Computer.h"
+#include "rps/rps.h"
+#include "rps/human.h"
+#include "rps/computer.h"
+#include "rps/utility.h"
 
-void printSummary(long long round_count, Player* computer, Player* human);
+void printSummary(long long round_count, const Player& computer, const Player& human);
 
 int main(int argc, char** argv)
 {
@@ -31,27 +31,36 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    std::unique_ptr<Player> human = std::make_unique<Human>();
-    std::unique_ptr<Player> computer = std::make_unique<Computer>();
+    Human human;
+    Computer computer;
 
     long long round = 0;
     while(round_count--) {
         std::cout << "Round #" << round++ << '\n';
-        RPS rps(computer.get(), human.get());
-        rps.fight();
+        human.pickWeapon();
+        computer.pickWeapon();
+
+        const auto winner = pickWinner(computer, human);
+        if(winner) {
+            winner->win();
+            std::cout << "Winner: " << winner->getDescription() << "\n\n\n";
+        } else {
+            std::cout << NO_WINNER_MSG << "\n\n\n";
+        }
     }
 
-    printSummary(round, computer.get(), human.get());
+    printSummary(round, computer, human);
 
     return EXIT_SUCCESS;
 }
 
-void printSummary(long long round_count, Player* computer, Player* human)
+void printSummary(long long round_count, const Player& computer, const Player& human)
 {
-    const auto human_score = human->getScore();
-    const auto computer_score = computer->getScore();
+    const auto human_score = human.getScore();
+    const auto computer_score = computer.getScore();
 
     std::cout << "Game Summary:\n";
+    std::cout << "\t\tRound count: " << round_count << '\n';
     std::cout << "\t\tHuman: " << human_score << '\n';
     std::cout << "\t\tComputer: " << computer_score << '\n';
     std::cout << "\t\tTie: " << round_count - human_score - computer_score << std::endl;
