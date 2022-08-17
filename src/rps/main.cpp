@@ -21,9 +21,11 @@ int main(int argc, char** argv)
     try {
         round_count = std::stoll(argv[1]);
     } catch(const std::invalid_argument& e) {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << ", Invalid argument." << '\n';
+        return EXIT_FAILURE;
     } catch(const std::out_of_range& e) {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << ", Out of range." << '\n';
+        return EXIT_FAILURE;
     }
 
     if(round_count <= 0) {

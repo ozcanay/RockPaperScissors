@@ -15,7 +15,7 @@ Weapon Human::pickWeapon()
         std::cout << i + 1 << ") " << weapons[i] << ' ';
     }
 
-    auto my_choice = readStream(std::cin, 1, weapons.size());
+    const auto my_choice = readStream(std::cin, 1, weapons.size());
     weapon_ = static_cast<Weapon>(my_choice);
 
     std::cout << "I picked " << enumToString(weapon_) << '\n';
