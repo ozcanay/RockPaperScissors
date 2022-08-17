@@ -13,11 +13,6 @@ Weapon Player::getWeapon() const
     return weapon_;
 }
 
-std::string Player::getDescription() const
-{
-    return description_;
-}
-
 void Player::setWeapon(Weapon weapon)
 {
     weapon_ = weapon;

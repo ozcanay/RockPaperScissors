@@ -3,7 +3,7 @@
 #include <string>
 
 enum class Weapon {
-    Unarmed = 0,
+    None = 0,
     Rock = 1,
     Paper = 2,
     Scissors = 3
@@ -21,9 +21,8 @@ public:
     void win();
 
 protected:
-    Weapon weapon_ = Weapon::Unarmed;
+    Weapon weapon_ = Weapon::None;
     int score_ = 0;
-    std::string description_;
 };
 
 std::string enumToString(Weapon weapon);

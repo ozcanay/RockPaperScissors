@@ -1,13 +1,26 @@
-#include "rps/rps.h"
+#include "game.h"
+#include "constants.h"
 
 #include <iostream>
 
-#include "rps/player.h"
-#include "constants.h"
-
-Player* pickWinner(Player& player1, Player& player2)
+Game::Game(Human& human, Computer& computer)
+    : human_{human}
+    , computer_{computer}
 {
-    Player* winner;
+
+}
+
+void Game::armPlayers()
+{
+    std::cout << "Round #" << round_count_++ << '\n';
+
+    human_.pickWeapon();
+    computer_.pickWeapon();
+}
+
+Player* Game::pickWinner(Player& player1, Player& player2)
+{
+    Player* winner = nullptr;
     const auto player1_weapon = player1.getWeapon();
 
     if(player1_weapon == Weapon::Rock) {
@@ -48,4 +61,16 @@ Player* pickWinner(Player& player1, Player& player2)
     }
 
     return winner;
+}
+
+void Game::printSummary()
+{
+    const auto human_score = human_.getScore();
+    const auto computer_score = computer_.getScore();
+
+    std::cout << "Game Summary:\n";
+    std::cout << "\t\tRound count: " << round_count_ << '\n';
+    std::cout << "\t\tHuman: " << human_score << '\n';
+    std::cout << "\t\tComputer: " << computer_score << '\n';
+    std::cout << "\t\tTie: " << round_count_ - human_score - computer_score << std::endl;
 }

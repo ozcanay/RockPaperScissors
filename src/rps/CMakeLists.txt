@@ -1,7 +1,7 @@
-add_library(rps
+set(sources
         main.cpp
-        rps.cpp
-        include/rps/rps.h
+        game.cpp
+        include/rps/game.h
         player.cpp
         include/rps/player.h
         human.cpp
@@ -9,22 +9,14 @@ add_library(rps
         computer.cpp
         include/rps/computer.h
         utility.cpp
-        include/rps/utility.h
-        constants.h)
+        utility.h
+        constants.h
+        game.cpp
+        game.h
+    )
 
-add_executable(rps_exe
-        main.cpp
-        rps.cpp
-        include/rps/rps.h
-        player.cpp
-        include/rps/player.h
-        human.cpp
-        include/rps/human.h
-        computer.cpp
-        include/rps/computer.h
-        utility.cpp
-        include/rps/utility.h
-        constants.h)
+add_library(rps ${sources} )
+add_executable(rps_exe ${sources})
 
 target_include_directories(rps PUBLIC include)
 target_include_directories(rps_exe PUBLIC include)

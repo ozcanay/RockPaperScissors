@@ -1,14 +1,9 @@
 #include <iostream>
 #include <string>
 
+#include "game.h"
 #include "constants.h"
-
-#include "rps/rps.h"
-#include "rps/human.h"
-#include "rps/computer.h"
-#include "rps/utility.h"
-
-void printSummary(long long round_count, const Player& computer, const Player& human);
+#include "utility.h"
 
 int main(int argc, char** argv)
 {
@@ -17,9 +12,9 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    long long round_count = 0;
+    int round_count;
     try {
-        round_count = std::stoll(argv[1]);
+        round_count = std::stoi(argv[1]);
     } catch(const std::invalid_argument& e) {
         std::cerr << e.what() << ", Invalid argument." << '\n';
         return EXIT_FAILURE;
@@ -35,14 +30,12 @@ int main(int argc, char** argv)
 
     Human human;
     Computer computer;
+    Game game(human, computer);
 
-    long long round = 0;
     while(round_count--) {
-        std::cout << "Round #" << round++ << '\n';
-        human.pickWeapon();
-        computer.pickWeapon();
+        game.armPlayers();
 
-        const auto winner = pickWinner(computer, human);
+        const auto winner = Game::pickWinner(human, computer);
         if(winner) {
             winner->win();
             std::cout << "Winner: " << winner->getDescription() << "\n\n\n";
@@ -51,19 +44,7 @@ int main(int argc, char** argv)
         }
     }
 
-    printSummary(round, computer, human);
+    game.printSummary();
 
     return EXIT_SUCCESS;
-}
-
-void printSummary(long long round_count, const Player& computer, const Player& human)
-{
-    const auto human_score = human.getScore();
-    const auto computer_score = computer.getScore();
-
-    std::cout << "Game Summary:\n";
-    std::cout << "\t\tRound count: " << round_count << '\n';
-    std::cout << "\t\tHuman: " << human_score << '\n';
-    std::cout << "\t\tComputer: " << computer_score << '\n';
-    std::cout << "\t\tTie: " << round_count - human_score - computer_score << std::endl;
 }

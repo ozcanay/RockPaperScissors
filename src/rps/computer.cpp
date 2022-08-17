@@ -1,5 +1,5 @@
 #include "rps/computer.h"
-#include "rps/utility.h"
+#include "utility.h"
 #include "constants.h"
 
 std::string Computer::getDescription() const

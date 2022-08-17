@@ -1,5 +1,5 @@
 #include "rps/human.h"
-#include "rps/utility.h"
+#include "utility.h"
 #include "constants.h"
 
 std::string Human::getDescription() const
